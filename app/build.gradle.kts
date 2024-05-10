@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.secretGradlePlugin)
+    alias(libs.plugins.protobuf)
 }
 
 android {
@@ -14,6 +15,13 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+
+        val serverUrl: String? by project
+        if (serverUrl != null) {
+            resValue("string", "server_url", serverUrl!!)
+        } else {
+            resValue("string", "server_url", "http://10.0.2.2:50051/")
+        }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -64,7 +72,42 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.compose)
     implementation(libs.koin.android)
+
+    implementation(libs.grpc.protobuf.lite)
+    implementation(libs.protobuf.kotlin.lite)
+    implementation(libs.grpc.kotlin.stub)
+    runtimeOnly(libs.grpc.okhttp)
 }
+
 secrets {
     defaultPropertiesFileName = "local.properties"
+}
+
+protobuf {
+    protoc {
+        artifact = libs.protoc.asProvider().get().toString()
+    }
+    plugins {
+        create("java") {
+            artifact = libs.protoc.gen.grpc.java.get().toString()
+        }
+        create("grpc") {
+            artifact = libs.protoc.gen.grpc.java.get().toString()
+        }
+        create("grpckt") {
+            artifact = libs.protoc.gen.grpc.kotlin.get().toString() + ":jdk8@jar"
+        }
+    }
+    generateProtoTasks {
+        all().forEach {
+            it.plugins {
+                create("java"){ option("lite") }
+                create("grpc") { option("lite") }
+                create("grpckt") { option("lite") }
+            }
+            it.builtins {
+                create("kotlin") { option("lite") }
+            }
+        }
+    }
 }
