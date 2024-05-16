@@ -1,0 +1,22 @@
+{
+  "methodConfig": [
+    {
+      "name": [
+        {
+          "service": "location.LocationService",
+          "method": "GetLastKnownLocation"
+        }
+      ],
+
+      "retryPolicy": {
+        "maxAttempts": 5,
+        "initialBackoff": "0.5s",
+        "maxBackoff": "30s",
+        "backoffMultiplier": 2,
+        "retryableStatusCodes": [
+          "INVALID_ARGUMENT"
+        ]
+      }
+    }
+  ]
+}
