@@ -14,7 +14,7 @@
         "maxBackoff": "30s",
         "backoffMultiplier": 2,
         "retryableStatusCodes": [
-          "INVALID_ARGUMENT"
+          "UNAVAILABLE"
         ]
       }
     }
