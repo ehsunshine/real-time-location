@@ -102,7 +102,7 @@ protobuf {
     generateProtoTasks {
         all().forEach {
             it.plugins {
-                create("java"){ option("lite") }
+                create("java") { option("lite") }
                 create("grpc") { option("lite") }
                 create("grpckt") { option("lite") }
             }

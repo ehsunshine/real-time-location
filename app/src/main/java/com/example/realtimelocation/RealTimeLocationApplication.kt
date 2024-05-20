@@ -1,7 +1,7 @@
 package com.example.realtimelocation
 
 import android.app.Application
-import com.example.realtimelocation.data.location.carLocationDataModule
+import com.example.realtimelocation.data.di.carLocationDataModule
 import com.example.realtimelocation.data.tabs.bottomTabsDataModule
 import com.example.realtimelocation.ui.di.uiModule
 import org.koin.android.ext.koin.androidContext
