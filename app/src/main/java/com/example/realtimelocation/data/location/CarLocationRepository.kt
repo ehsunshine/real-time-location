@@ -1,22 +1,15 @@
 package com.example.realtimelocation.data.location
 
 import android.location.Location
-import com.example.realtimelocation.data.network.CarLocationServiceDataSource
-import kotlinx.coroutines.delay
+import android.net.Uri
+import com.google.gson.stream.JsonReader
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
 internal class CarLocationRepository(
-    private val carLocationServiceDataSource: CarLocationServiceDataSource,
+    private val serverAddress: Uri,
 ) {
 
-    fun get(): Flow<Location> = flow {
-        (1..100).forEach {
-            emit(Location("gps").apply {
-                latitude = 57.698923 + it * 0.0001
-                longitude = 11.977410 + it * 0.0001
-            })
-            delay(2000)
-        }
-    }
+    fun get(): Flow<Location> = flowOf()
+
 }
