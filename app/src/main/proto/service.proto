@@ -5,11 +5,11 @@ package location;
 option java_package = "com.example.realtimelocation.data.location";
 
 message LocationRequest {
-  string vin = 1;
+  string car_id = 1;
 }
 
 message LastKnownLocation {
-  string vin = 1;
+  string car_id = 1;
   double longitude = 2;
   double latitude = 3;
   uint64 timestamp  = 4; //unix
