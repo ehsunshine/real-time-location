@@ -2,8 +2,8 @@ package com.example.realtimelocation
 
 import com.example.realtimelocation.data.location.LocationServiceGrpcKt
 import com.example.realtimelocation.data.location.Service
-import com.example.realtimelocation.data.location.Service.LastKnownLocation
-import com.example.realtimelocation.data.location.lastKnownLocation
+import com.example.realtimelocation.data.location.Service.CarLocation
+import com.example.realtimelocation.data.location.carLocation
 import io.grpc.Server
 import io.grpc.ServerBuilder
 import io.grpc.Status
@@ -47,7 +47,7 @@ class LastKnownLocationServer(private val port: Int) {
 
     internal class LastKnownLocationService : LocationServiceGrpcKt.LocationServiceCoroutineImplBase() {
 
-        override fun getLastKnownLocation(request: Service.LocationRequest): Flow<Service.LastKnownLocation> = flow {
+        override fun getLocation(request: Service.LocationRequest): Flow<Service.CarLocation> = flow {
             if (SERVICE_UNAVAILABLE && numberOfServiceCalls++ < 3) {
                 throw StatusException(Status.UNAVAILABLE.withDescription("Service is not ready"))
             }
@@ -59,9 +59,9 @@ class LastKnownLocationServer(private val port: Int) {
             }
         }
 
-        private suspend fun FlowCollector<LastKnownLocation>.emitLastKnownLocations() {
+        private suspend fun FlowCollector<CarLocation>.emitLastKnownLocations() {
             mockedLocations.forEach { (long, lat) ->
-                emit(lastKnownLocation {
+                emit(carLocation {
                     latitude = lat
                     longitude = long
                 })
