@@ -17,7 +17,7 @@ import mockedLocations
 class LastKnownLocationServer(private val port: Int) {
     companion object {
         var numberOfServiceCalls = 0
-        const val SERVICE_UNAVAILABLE = false
+        const val SERVICE_UNAVAILABLE = true
     }
     private val server: Server =
         ServerBuilder

@@ -34,7 +34,7 @@ internal class CarLocationRepository(
 
     fun get(): Flow<Location> = LocationServiceGrpcKt.LocationServiceCoroutineStub(channel)
         .withWaitForReady()
-        .getLocation(locationRequest { this.carId = "" })
+        .getLocation(locationRequest { this.carId = "VIN12345" })
         .map {
             Location("gps").apply {
                 longitude = it.longitude
