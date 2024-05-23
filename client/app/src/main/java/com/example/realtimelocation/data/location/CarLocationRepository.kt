@@ -10,6 +10,8 @@ internal class CarLocationRepository(
     serverAddress: Uri,
 ) {
 
-    fun get(): Flow<Location> = flowOf()
+    fun get(): Flow<Location> {
+        return flowOf()
+    }
 
 }
