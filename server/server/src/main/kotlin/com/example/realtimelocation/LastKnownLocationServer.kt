@@ -47,7 +47,7 @@ class LastKnownLocationServer(private val port: Int) {
 
     internal class LastKnownLocationService : LocationServiceGrpcKt.LocationServiceCoroutineImplBase() {
 
-        override fun getLocation(request: Service.LocationRequest): Flow<Service.CarLocation> = flow {
+        override fun getLocation(request: Service.LocationRequest): Flow<CarLocation> = flow {
             if (SERVICE_UNAVAILABLE && numberOfServiceCalls++ < 3) {
                 throw StatusException(Status.UNAVAILABLE.withDescription("Service is not ready"))
             }
